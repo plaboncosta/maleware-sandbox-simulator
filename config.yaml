@@ -1,0 +1,10 @@
+sandbox:
+  timeout_seconds: 10
+  memory_limit_mb: 100
+  sample_directory: "./samples"
+  log_directory: "./logs"
+  disable_internet: true
+
+logging:
+  log_format: "json"
+  verbose: true
