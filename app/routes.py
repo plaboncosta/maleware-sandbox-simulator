@@ -21,12 +21,14 @@ def load_config():
 
 
 def allowed_file(filename):
+    print('File Info', filename.rsplit('.', 1))
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @main.route('/')
 def home():
-    return render_template('dashboard.html')
+    logs = []
+    return render_template('dashboard.html', logs=logs)
 
 
 @main.route('/upload', methods=['POST'])
@@ -43,10 +45,12 @@ def upload():
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
+        print('File name', filename)
         path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
         file.save(path)
 
         config = load_config()
+        print('Config loaded', config)
 
         # Run analysis
         logs = sandbox_controller.run_sample(path, config)
