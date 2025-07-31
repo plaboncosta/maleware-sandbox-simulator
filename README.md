@@ -13,3 +13,16 @@ Place a secret key
 
 # Run Flask app
 python run.py
+
+# Docker build & run
+# Rebuild with updated entrypoint.sh
+docker build -t sandbox .
+
+# Create custom network (non-internal so browser access works)
+docker network create no-internet-visible
+
+# Run the container on that network
+docker run -d --rm -p 5000:5000 \
+  --name sandbox_container \
+  --network no-internet-visible \
+  sandbox
